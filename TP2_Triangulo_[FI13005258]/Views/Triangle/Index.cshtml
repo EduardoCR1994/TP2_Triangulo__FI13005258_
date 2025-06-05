@@ -1,0 +1,67 @@
+﻿@model TP2_Triangulo__FI13005258_.Models.TriangleModel
+@{
+    ViewBag.Title = "Calculadora de Triángulos";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Formulario -->
+        <div class="col-md-6">
+            <div class="card border-dark">
+                <div class="card-header bg-dark text-white">Ingresar los lados (unidades)</div>
+                <div class="card-body bg-light text-dark">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.A)
+                            @Html.TextBoxFor(m => m.A, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.A, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.B)
+                            @Html.TextBoxFor(m => m.B, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.B, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.C)
+                            @Html.TextBoxFor(m => m.C, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.C, "", new { @class = "text-danger" })
+                        </div>
+                        <button type="submit" class="btn btn-dark mt-2">Calcular</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados -->
+        <div class="col-md-6">
+            <div class="card border-secondary">
+                <div class="card-header bg-secondary text-white">Resultados / Errores</div>
+                <div class="card-body bg-light text-dark">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="text-danger">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <p>• @error.ErrorMessage</p>
+                            }
+                        </div>
+                    }
+
+                    @if (Model.Perimeter > 0)
+                    {
+                        <ul class="list-unstyled">
+                            <li><strong>P =</strong> @Model.Perimeter u</li>
+                            <li><strong>S =</strong> @Model.SemiPerimeter u</li>
+                            <li><strong>A =</strong> @Math.Round(Model.Area, 2) u²</li>
+                            <li><strong>Tipo:</strong> @Model.TriangleType</li>
+                            <li><strong>α ≈</strong> @Math.Round(Model.Alpha, 2) º</li>
+                            <li><strong>β ≈</strong> @Math.Round(Model.Beta, 2) º</li>
+                            <li><strong>ɣ ≈</strong> @Math.Round(Model.Gamma, 2) º</li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
